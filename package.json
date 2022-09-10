@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "migrate": "knex migrate:latest",
+    "migrate": "npx knex migrate:latest",
+    "rollback": "npx knex migrate:rollback",
+    "resetdb": "npm run rollback && npm run migrate && npx knex seed:run",
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent"
   },
   "repository": {
@@ -14,6 +16,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "2.8.5",
     "express": "4.18.1",
     "helmet": "5.0.2",
@@ -26,6 +29,6 @@
     "eslint": "8.14.0",
     "jest": "28.1.0",
     "nodemon": "2.0.16",
-    "supertest": "6.2.3"
+    "supertest": "^6.2.3"
   }
 }
