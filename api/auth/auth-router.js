@@ -8,7 +8,10 @@ try{
   const { username, password } = req.body
 
   if(typeof username != 'string' || username.trim() == '') {
-    res.status(400).json({ message: "username and password required"});
+    res.status(404).json({ message: "username and password required"});
+    return
+  } else if(User.findBy(username)){
+    res.status(404).json({ message: "username taken"})
     return
   }
   

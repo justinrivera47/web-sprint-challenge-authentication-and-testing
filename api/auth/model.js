@@ -1,7 +1,7 @@
 const db = require('../../data/dbConfig')
 
-function findBy(filter){
-  return db('users').where(filter)
+async function findBy(filter){
+  await db('users').select('username').where('username', filter)
 }
 
 function getById(id){

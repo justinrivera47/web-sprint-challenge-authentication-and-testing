@@ -41,4 +41,6 @@ describe('HTTP endpoints', () => {
       result = await db('users').where('username', 'Captain Marvel').first();
       expect(result).toBeDefined();
     });
+
+    //make a test that expects the screen to render, "Welcome, ${username}"
 })
