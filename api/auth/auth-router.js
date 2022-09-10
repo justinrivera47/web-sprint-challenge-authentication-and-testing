@@ -2,22 +2,23 @@ const router = require('express').Router();
 const User = require('./model')
 const bcrypt = require('bcryptjs')
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   // res.end('implement register, please!');
+try{
+  const { username, password } = req.body
 
-  let { username, password } = req.body
-  if(typeof username !== 'string' || username.trim() == '') {
-      res.status(400).json({ message: "username and password required"});
-      return
+  if(typeof username != 'string' || username.trim() == '') {
+    res.status(400).json({ message: "username and password required"});
+    return
   }
-
-  username = username.trim()
-
-  let hash = bcrypt.hash(password, 6)
-
+  
+  let hash = bcrypt.hashSync(password, 6)
   await User.add({username, password: hash})
 
-  res.status(201).send({ message: `Welcome, ${username}`})
+  res.status(201).send({ message: `Welcome, ${username}` })
+} catch(err) {
+  next(err)
+}
 
 
   /*
