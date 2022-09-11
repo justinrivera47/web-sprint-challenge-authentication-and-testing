@@ -45,27 +45,27 @@ router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
   */
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', validateUser, (req, res, next) => {
   // res.end('implement login, please!');
 
-    let { username, password } = req.body
+    let { username, password } = req.newUser
 
     
     User.findBy({ username })
-    .then(([user]) => {
-      if(!username || !password) {
-        res.status(404).json({ message: "username and password required"});
-        return
-      }
-      if(user && bcrypt.compareSync(password, user.password)){
-        const token = buildToken(user)
-        return res.status(200).json({
-          message: `welcome, ${username}`,
-          token
-        })
-      } else {
-        next({ status: 401, message: "invalid credentials"})
-      }
+      .then(([user]) => {
+        if(!username || !password) {
+          res.status(404).json({ message: "username and password required"});
+          return
+        }
+        if(user && bcrypt.compareSync(password, user.password)){
+          const token = buildToken(user)
+          return res.status(200).json({
+            message: `welcome, ${username}`,
+            token
+          })
+        } else {
+          next({ status: 401, message: "invalid credentials"})
+        }
     }
     )
 
