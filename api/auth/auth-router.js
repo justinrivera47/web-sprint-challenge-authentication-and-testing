@@ -10,14 +10,18 @@ router.post('/register', async (req, res, next) => {
 try{
   const { username, password } = req.body
 
+  console.log('first ', username)
+  
   if(typeof username != 'string' || username.trim() == '') {
     res.status(404).json({ message: "username and password required"});
     return
-  } else if(User.find(username)){
-    res.status(404).json({ message: "username taken"})
-    return
   }
-  
+  User.find(username)
+    .then((result) => {
+      if(result != null){
+        res.status(404).json({ message: "username taken"})
+        return
+  }});
   let hash = bcrypt.hashSync(password, 6)
   await User.add({username, password: hash})
 
