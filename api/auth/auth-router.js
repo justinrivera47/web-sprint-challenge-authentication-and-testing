@@ -2,31 +2,20 @@ const router = require('express').Router();
 const User = require('./model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { validateUser, uniqueUser } = require('./middleware')
 
 const { JWT_SECRET } = require('../../config/index')
 
-router.post('/register', async (req, res, next) => {
-  // res.end('implement register, please!');
-try{
-  const { username, password } = req.body
-  
-  if(typeof username != 'string' || username.trim() == '' || password.trim() == '') {
-    res.status(404).json({ message: "username and password required"});
-    return
-  }
-  User.find(username)
-    .then((result) => {
-      if(result != null){
-        res.status(404).json({ message: "username taken"})
-        return
-  }});
-  let hash = bcrypt.hashSync(password, 6)
-  await User.add({username, password: hash})
+router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
+  try{
+    const { username, password } = req.newUser
+    let hash = bcrypt.hashSync(password, 6)
+    await User.add({username, password: hash})
 
-  res.status(201).send({ message: `Welcome, ${username}` })
-} catch(err) {
-  next(err)
-}
+    res.status(201).send({ message: `Welcome, ${username}` })
+  } catch(err) {
+    next(err)
+  }
 
 
   /*
