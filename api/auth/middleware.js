@@ -6,7 +6,10 @@ function validateUser(req, res, next) {
     res.status(404).json({ message: "username and password required"});
     return
   } else {
-      req.newUser = { username: username.trim()}
+      req.newUser = { 
+        username: username.trim(),
+        password: password.trim()
+      }
       next()
   }
 }
