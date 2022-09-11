@@ -9,10 +9,8 @@ router.post('/register', async (req, res, next) => {
   // res.end('implement register, please!');
 try{
   const { username, password } = req.body
-
-  console.log('first ', username)
   
-  if(typeof username != 'string' || username.trim() == '') {
+  if(typeof username != 'string' || username.trim() == '' || password.trim() == '') {
     res.status(404).json({ message: "username and password required"});
     return
   }
