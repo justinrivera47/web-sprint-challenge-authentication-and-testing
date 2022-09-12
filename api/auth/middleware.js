@@ -1,7 +1,7 @@
 const User = require('./model')
 
 const validateUser = (req, res, next) => {
-  let { username, password } = req.body
+  const { username, password } = req.body
   
   if(username.trim() == '' || password.trim() == '' || password == undefined || username == undefined || !username || !password) {
     return res.status(404).json({ message: "username and password required"})
