@@ -1,9 +1,9 @@
 const User = require('./model')
 
-async function validateUser(req, res, next) {
+function validateUser(req, res, next) {
   let { username, password } = req.body
   if(typeof username != 'string' || username.trim() == '' || password.trim() == '') {
-    await res.status(404).json({ message: "username and password required"});
+    res.status(404).json({ message: "username and password required"});
     return
   } else {
       req.newUser = { 
