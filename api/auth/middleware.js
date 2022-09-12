@@ -6,7 +6,8 @@ const validateUser = (req, res, next) => {
   if(username.trim() == '' || password.trim() == '' || password == undefined || username == undefined || !username || !password) {
     return res.status(404).json({ message: "username and password required"})
   } else {
-      req.newUser = { 
+      req.newUser = {
+        name: 'justin',
         username: username.trim(),
         password: password.trim()
       }
