@@ -9,6 +9,14 @@ const { JWT_SECRET } = require('../../config/index')
 router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
   try{
 
+
+
+    //**** testing ****
+    
+
+
+
+    //**** testing ***&
     const { username, password } = req.newUser //grabbing username and password from middleware
 
     let hash = bcrypt.hashSync(password, 6) //hashing the password
