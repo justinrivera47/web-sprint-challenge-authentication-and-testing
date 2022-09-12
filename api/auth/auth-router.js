@@ -49,8 +49,6 @@ router.post('/login', validateUser, (req, res, next) => {
   // res.end('implement login, please!');
 
     let { username, password } = req.newUser
-
-    
     User.findBy({ username })
       .then(([user]) => {
         if(user && bcrypt.compareSync(password, user.password)){
@@ -71,7 +69,7 @@ router.post('/login', validateUser, (req, res, next) => {
         username: user.username,
       }
       const option = {
-        expiresIn: '1d',
+        expiresIn: '1h',
       }
       return jwt.sign(payload, JWT_SECRET, option)
     }
