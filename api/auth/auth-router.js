@@ -11,8 +11,7 @@ router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
     const { username, password } = req.newUser
     let hash = bcrypt.hashSync(password, 6)
     await User.add({username, password: hash})
-
-    res.status(201).send({ message: `Welcome, ${username}` })
+      res.status(201).send({ message: `Welcome, ${username}` })
   } catch(err) {
     next(err)
   }
