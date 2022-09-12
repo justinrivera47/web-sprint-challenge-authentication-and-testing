@@ -18,8 +18,8 @@ router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
       const id = result.id
       return res.status(201).send({
         id: id,
-        username: `Welcome, ${result.username}`,
-        password: `${result.password}`
+        username: result.username,
+        password: result.password
       })
     })
   } catch(err) {

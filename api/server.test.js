@@ -37,7 +37,7 @@ describe('HTTP endpoints', () => {
 
       expect(result.status).toBe(201);
       expect(result.body).toMatchObject({ 
-        message: `Welcome, Captain Marvel`
+        username: `Captain Marvel`
       });
 
       result = await db('users').where('username', 'Captain Marvel').first();
