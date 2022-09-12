@@ -12,7 +12,7 @@ router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
     let hash = bcrypt.hashSync(password, 6)
     await User.add({username, password: hash})
       res.status(201).send({ 
-        id: id,
+        id: req.body.id,
         message: `Welcome, ${username}`,
         username: username,
         password: `${hash}`
