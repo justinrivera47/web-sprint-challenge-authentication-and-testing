@@ -18,13 +18,13 @@ afterAll(async () => {
 })
 
 describe('HTTP endpoints', () => {
-    test('GET /', async () => {
+    test(`GET / can't jokes without token`, async () => {
       let result = await request(server).get('/api/jokes')
-      expect(result.status).toBe(200);
+      expect(result.status).toBe(401);
       expect(result.body).toBeDefined();
     })
 
-    test('Post /', async () => {
+    test('Post / sending password with empty string for username vs with correct username', async () => {
       let result = await request(server)
           .post('/api/auth/register')
           .send({ username: '    ', password: 'foobar'});
@@ -36,7 +36,7 @@ describe('HTTP endpoints', () => {
           .send({ username: 'Captain Marvel', password: 'foobar'});
 
       expect(result.status).toBe(201);
-      expect(result.body).toNotMatchObject({ 
+      expect(result.body).toMatchObject({ 
         message: `Welcome, Captain Marvel`
       });
 

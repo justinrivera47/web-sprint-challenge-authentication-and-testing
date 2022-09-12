@@ -8,11 +8,13 @@ const { JWT_SECRET } = require('../../config/index')
 
 router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
   try{
-    const { username, password } = req.newUser
+    const { username, password, id } = req.newUser
     let hash = bcrypt.hashSync(password, 6)
     await User.add({username, password: hash})
       res.status(201).send({ 
+        id: id,
         message: `Welcome, ${username}`,
+        username: username,
         password: `${hash}`
     })
   } catch(err) {
