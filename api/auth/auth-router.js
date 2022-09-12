@@ -13,7 +13,7 @@ router.post('/register', validateUser, uniqueUser, async (req, res, next) => {
     await User.add({username, password: hash})
       res.status(201).send({ 
         message: `Welcome, ${username}`,
-        password: `${password}`
+        password: `${hash}`
     })
   } catch(err) {
     next(err)

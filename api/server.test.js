@@ -29,14 +29,16 @@ describe('HTTP endpoints', () => {
           .post('/api/auth/register')
           .send({ username: '    ', password: 'foobar'});
 
-      expect(result.status).toBe(400);
+      expect(result.status).toBe(404);
 
           result = await request(server)
           .post('/api/auth/register')
           .send({ username: 'Captain Marvel', password: 'foobar'});
 
       expect(result.status).toBe(201);
-      expect(result.body).toMatchObject({ message: `Welcome, Captain Marvel` });
+      expect(result.body).toNotMatchObject({ 
+        message: `Welcome, Captain Marvel`
+      });
 
       result = await db('users').where('username', 'Captain Marvel').first();
       expect(result).toBeDefined();
